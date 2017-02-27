@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # Set OS variable and install opengl if linux system is detected
-if [ "$(uname)" == "Darwin" ]; then
+OS="Linux"
+if [ "$(uname)" = "Darwin" ]; then
     brew install wget
     OS="Mac"
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    OS="Linux"
-    sudo apt-get update 
+elif [ $OS = "Linux" ]; then
+    sudo apt-get update
 	sudo apt-get install build-essential
 	sudo apt-get install freeglut3-dev
 fi
@@ -71,21 +71,20 @@ sudo make
 cd ..
 
 # Add pmsimple to the environmental PATH variable
-export PATH=$PATH:/Users/admin/Dropbox/HomeProjects/bitbucket/LEMPS/bin/$OS
-if [ $OS == "Darwin" ]; then
-    source ~/.bash_profile
-elif [ $OS == "Linux" ]; then
-    source ~/.bashrc
+BIN_DIR="${INSTALL_DIR}/lemps/bin/$OS"
+if [ "$OS" = "Mac" ]; then
+	sudo printf "\nexport PATH=\${PATH}:$BIN_DIR\n" >> ~/.bash_profile
+    alias brc='source ~/.bashrc'
+    sudo chmod -R 777 ${INSTALL_DIR}
+elif [ "$OS" = "Linux" ]; then
+	sudo printf "\nexport PATH=\${PATH}:$BIN_DIR\n" >> ~/.bashrc
+	alias brc='source ~/.bashrc'
+	sudo chmod -R 777 ${INSTALL_DIR}
 fi
 
 # Generate script file to run pmsimple (this file is optional and probably useful only when using pmsimple through ssh)
 sudo rm -f start.sh
 sudo touch start.sh
 sudo chmod 777 start.sh
-printf "#!/bin/sh\n" >> start.sh
-printf "executable=" >> start.sh
-printf $INSTALL_DIR >> start.sh
-printf "/lemps/bin/" >> start.sh
-printf $OS >> start.sh
-printf "pmsimple\n" >> start.sh
+printf "#!/bin/sh\nexecutable=$BIN_DIR/pmsimple\n" >> start.sh
 printf "sudo \$executable" >> start.sh
