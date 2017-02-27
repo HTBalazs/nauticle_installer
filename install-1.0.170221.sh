@@ -13,11 +13,11 @@ fi
 
 INSTALL_DIR=$PWD
 
-# # wget http://www.vtk.org/files/release/7.0/VTK-7.0.0.zip
-# sudo unzip VTK-7.0.0.zip -d /usr/local/
-# cd /usr/local/VTK-7.0.0
-# sudo cmake .
-# sudo make
+wget http://www.vtk.org/files/release/7.0/VTK-7.0.0.zip
+sudo unzip VTK-7.0.0.zip -d /usr/local/
+cd /usr/local/VTK-7.0.0
+sudo cmake .
+sudo make
 
 cd $INSTALL_DIR
 # Download and unzip the necessary files
@@ -87,5 +87,5 @@ printf "executable=" >> start.sh
 printf $INSTALL_DIR >> start.sh
 printf "/lemps/bin/" >> start.sh
 printf $OS >> start.sh
-printf "/pmsimple\n" >> start.sh
+printf "pmsimple\n" >> start.sh
 printf "sudo \$executable" >> start.sh
