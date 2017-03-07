@@ -4,11 +4,13 @@
 OS="Linux"
 if [ "$(uname)" = "Darwin" ]; then
     brew install wget
+   	brew install cmake
     OS="Mac"
 elif [ $OS = "Linux" ]; then
     sudo apt-get update
 	sudo apt-get install build-essential
 	sudo apt-get install freeglut3-dev
+	sudo apt-get install cmake
 fi
 
 INSTALL_DIR=$PWD
