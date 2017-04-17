@@ -1,3 +1,3 @@
 # README #
 
-Installation repository gives automation tool for the LEMPS installation process.
+Installation repository gives automation tool for the Nauticle installation process.
