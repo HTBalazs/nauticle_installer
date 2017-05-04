@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# Versions of nauticle and its dependencies
+NAUTICLE_version="1.0.170221"
+VTK_version="7.0.0"
+CU_VERSION="1.0.170221"
+PL_version="1.0.170221"
+HX_version="1.0.170502"
+
 # Set current directory to install directory.
 INSTALL_DIR=$PWD
 sudo chmod -R 777 ${INSTALL_DIR}
@@ -20,9 +27,9 @@ elif [ $OS = "Linux" ]; then
 fi
 
 # Install proper version of VTK library
-wget http://www.vtk.org/files/release/7.0/VTK-7.0.0.zip
-sudo unzip VTK-7.0.0.zip -d /usr/local/
-cd /usr/local/VTK-7.0.0
+wget http://www.vtk.org/files/release/7.0/VTK-$VTK_version.zip
+sudo unzip VTK-$VTK_version.zip -d /usr/local/
+cd /usr/local/VTK-$VTK_version
 sudo cmake .
 sudo make
 
@@ -31,25 +38,25 @@ cd $INSTALL_DIR
 
 # Download and unzip the required packages
 # Common utils
-wget https://bitbucket.org/nauticleproject/commonutils/downloads/commonutils-1.0.170221.zip
-sudo unzip commonutils-1.0.170221.zip
+wget https://bitbucket.org/nauticleproject/commonutils/downloads/commonutils-$CU_VERSION.zip
+sudo unzip commonutils-$CU_VERSION.zip
 sudo chmod -R 777 commonutils
-rm commonutils-1.0.170221.zip
+rm commonutils-$CU_VERSION.zip
 # Prolog
-wget https://bitbucket.org/nauticleproject/prolog/downloads/prolog-1.0.170221.zip
-sudo unzip prolog-1.0.170221.zip
+wget https://bitbucket.org/nauticleproject/prolog/downloads/prolog-$PL_version.zip
+sudo unzip prolog-$PL_version.zip
 sudo chmod -R 777 prolog
-rm prolog-1.0.170221.zip
+rm prolog-$PL_version.zip
 # HandyXML
-wget https://bitbucket.org/nauticleproject/handyxml/downloads/handyxml-1.0.170221.zip
-sudo unzip handyxml-1.0.170221.zip
+wget https://bitbucket.org/nauticleproject/handyxml/downloads/handyxml-$HX_version.zip
+sudo unzip handyxml-$HX_version.zip
 sudo chmod -R 777 handyxml
-rm handyxml-1.0.170221.zip
+rm handyxml-$HX_version.zip
 # nauticle
-wget https://bitbucket.org/nauticleproject/nauticle/downloads/nauticle-1.0.170221.zip
-sudo unzip nauticle-1.0.170221.zip
+wget https://bitbucket.org/nauticleproject/nauticle/downloads/nauticle-$NAUTICLE_version.zip
+sudo unzip nauticle-$NAUTICLE_version.zip
 sudo chmod -R 777 nauticle
-rm nauticle-1.0.170221.zip
+rm nauticle-$NAUTICLE_version.zip
 
 # Install the dependencies and the nauticle executable (nauticle) itself
 cd commonutils
@@ -70,7 +77,7 @@ sudo cmake .
 sudo make install
 cd ..
 
-# Set sirectory name for executable
+# Set directory name for executable
 BIN_DIR="${INSTALL_DIR}/nauticle/bin/$OS"
 cd nauticle
 sudo cmake .
@@ -88,7 +95,8 @@ elif [ "$OS" = "Linux" ]; then
 	alias brc='source ~/.bashrc'
 fi
 
-# Generate script file to run nauticle (this file is optional and probably useful only when using nauticle through ssh)
+# Generate script file to run nauticle
+# (this file is optional and probably useful only when using Nauticle through ssh)
 sudo rm -f start.sh
 sudo touch start.sh
 sudo chmod 777 start.sh
