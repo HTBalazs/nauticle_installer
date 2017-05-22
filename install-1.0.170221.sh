@@ -6,6 +6,7 @@ VTK_version="7.0.0"
 CU_VERSION="1.0.170221"
 PL_version="1.0.170221"
 HX_version="1.0.170502"
+MC_version="1.0.170522"
 
 # Set current directory to install directory.
 INSTALL_DIR=$PWD
@@ -38,25 +39,35 @@ cd $INSTALL_DIR
 
 # Download and unzip the required packages
 # Common utils
-wget https://bitbucket.org/nauticleproject/commonutils/downloads/commonutils-$CU_VERSION.zip
-sudo unzip commonutils-$CU_VERSION.zip
+PCKG_CU=commonutils-$CU_VERSION.zip
+wget https://bitbucket.org/nauticleproject/commonutils/downloads/PCKG_CU
+sudo unzip PCKG_CU
 sudo chmod -R 777 commonutils
-rm commonutils-$CU_VERSION.zip
+rm PCKG_CU
 # Prolog
-wget https://bitbucket.org/nauticleproject/prolog/downloads/prolog-$PL_version.zip
-sudo unzip prolog-$PL_version.zip
+PCKG_PL=prolog-$PL_version.zip
+wget https://bitbucket.org/nauticleproject/prolog/downloads/PCKG_PL
+sudo unzip PCKG_PL
 sudo chmod -R 777 prolog
-rm prolog-$PL_version.zip
+rm PCKG_PL
 # HandyXML
-wget https://bitbucket.org/nauticleproject/handyxml/downloads/handyxml-$HX_version.zip
+PCKG_HX=handyxml_$HX_version.zip
+wget https://bitbucket.org/nauticleproject/handyxml/downloads/handyxml_$HX_version.zip
 sudo unzip handyxml-$HX_version.zip
 sudo chmod -R 777 handyxml
 rm handyxml-$HX_version.zip
+# Multiclock
+PCKG_MC=multiclock_$MC_version.zip
+wget https://bitbucket.org/nauticleproject/multiclock/downloads/PCKG_MC
+sudo unzip PCKG_MC
+sudo chmod -R 777 multiclock
+rm PCKG_MC
 # nauticle
-wget https://bitbucket.org/nauticleproject/nauticle/downloads/nauticle-$NAUTICLE_version.zip
-sudo unzip nauticle-$NAUTICLE_version.zip
+PCKG_NA=nauticle-$NAUTICLE_version.zip
+wget https://bitbucket.org/nauticleproject/nauticle/downloads/PCKG_NA
+sudo unzip PCKG_NA
 sudo chmod -R 777 nauticle
-rm nauticle-$NAUTICLE_version.zip
+rm PCKG_NA
 
 # Install the dependencies and the nauticle executable (nauticle) itself
 cd commonutils
@@ -77,6 +88,12 @@ sudo cmake .
 sudo make install
 cd ..
 
+cd multiclock
+sudo cmake .
+sudo cmake .
+sudo make install
+cd ..
+
 # Set directory name for executable
 BIN_DIR="${INSTALL_DIR}/nauticle/bin/$OS"
 cd nauticle
@@ -86,7 +103,7 @@ sudo mkdir $BIN_DIR
 sudo make
 cd ..
 
-# Add BIN_DIR to the environmental PATH variable
+# Add BIN_DIR to the environment PATH variable
 if [ "$OS" = "Mac" ]; then
 	sudo printf "\nexport PATH=\${PATH}:$BIN_DIR\n" >> ~/.bash_profile
     alias brc='source ~/.bash_profile'
