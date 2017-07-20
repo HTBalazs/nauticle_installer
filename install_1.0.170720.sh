@@ -39,28 +39,28 @@ cd $INSTALL_DIR
 # Download and unzip the required packages
 # Common utils
 PCKG_CU=commonutils_$CU_VERSION.zip
-wget https://bitbucket.org/nauticleproject/commonutils/downloads/PCKG_CU
-sudo unzip PCKG_CU
+wget https://bitbucket.org/BalazsToth/commonutils/downloads/$PCKG_CU
+sudo unzip $PCKG_CU
 sudo chmod -R 777 commonutils
-rm PCKG_CU
+rm $PCKG_CU
 # Prolog
 PCKG_PL=prolog_$PL_version.zip
-wget https://bitbucket.org/nauticleproject/prolog/downloads/PCKG_PL
-sudo unzip PCKG_PL
+wget https://bitbucket.org/BalazsToth/prolog/downloads/$PCKG_PL
+sudo unzip $PCKG_PL
 sudo chmod -R 777 prolog
-rm PCKG_PL
+rm $PCKG_PL
 # HandyXML
 PCKG_HX=handyxml_$HX_version.zip
-wget https://bitbucket.org/nauticleproject/handyxml/downloads/handyxml_$HX_version.zip
-sudo unzip handyxml-$HX_version.zip
+wget https://bitbucket.org/BalazsToth/handyxml/downloads/handyxml_$HX_version.zip
+sudo unzip $PCKG_HX
 sudo chmod -R 777 handyxml
-rm handyxml-$HX_version.zip
+rm $PCKG_HX
 # nauticle
 PCKG_NA=nauticle_$NAUTICLE_version.zip
-wget https://bitbucket.org/nauticleproject/nauticle/downloads/PCKG_NA
-sudo unzip PCKG_NA
+wget https://bitbucket.org/nauticleproject/nauticle/downloads/$PCKG_NA
+sudo unzip $PCKG_NA
 sudo chmod -R 777 nauticle
-rm PCKG_NA
+rm $PCKG_NA
 
 # Install the dependencies and the nauticle executable (nauticle) itself
 cd commonutils
