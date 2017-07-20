@@ -1,12 +1,11 @@
 #!/bin/sh
 
 # Versions of nauticle and its dependencies
-NAUTICLE_version="1.0.170221"
+NAUTICLE_version="1.0.170720"
 VTK_version="7.0.0"
-CU_VERSION="1.0.170221"
-PL_version="1.0.170221"
-HX_version="1.0.170502"
-MC_version="1.0.170522"
+CU_VERSION="1.0.170720"
+PL_version="1.0.170720"
+HX_version="1.0.170720"
 
 # Set current directory to install directory.
 INSTALL_DIR=$PWD
@@ -39,13 +38,13 @@ cd $INSTALL_DIR
 
 # Download and unzip the required packages
 # Common utils
-PCKG_CU=commonutils-$CU_VERSION.zip
+PCKG_CU=commonutils_$CU_VERSION.zip
 wget https://bitbucket.org/nauticleproject/commonutils/downloads/PCKG_CU
 sudo unzip PCKG_CU
 sudo chmod -R 777 commonutils
 rm PCKG_CU
 # Prolog
-PCKG_PL=prolog-$PL_version.zip
+PCKG_PL=prolog_$PL_version.zip
 wget https://bitbucket.org/nauticleproject/prolog/downloads/PCKG_PL
 sudo unzip PCKG_PL
 sudo chmod -R 777 prolog
@@ -56,14 +55,8 @@ wget https://bitbucket.org/nauticleproject/handyxml/downloads/handyxml_$HX_versi
 sudo unzip handyxml-$HX_version.zip
 sudo chmod -R 777 handyxml
 rm handyxml-$HX_version.zip
-# Multiclock
-PCKG_MC=multiclock_$MC_version.zip
-wget https://bitbucket.org/nauticleproject/multiclock/downloads/PCKG_MC
-sudo unzip PCKG_MC
-sudo chmod -R 777 multiclock
-rm PCKG_MC
 # nauticle
-PCKG_NA=nauticle-$NAUTICLE_version.zip
+PCKG_NA=nauticle_$NAUTICLE_version.zip
 wget https://bitbucket.org/nauticleproject/nauticle/downloads/PCKG_NA
 sudo unzip PCKG_NA
 sudo chmod -R 777 nauticle
@@ -83,12 +76,6 @@ sudo make install
 cd ..
  
 cd handyxml
-sudo cmake .
-sudo cmake .
-sudo make install
-cd ..
-
-cd multiclock
 sudo cmake .
 sudo cmake .
 sudo make install
