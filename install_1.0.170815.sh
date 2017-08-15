@@ -42,45 +42,38 @@ PCKG_CU=commonutils_$CU_VERSION.zip
 wget https://bitbucket.org/BalazsToth/commonutils/downloads/$PCKG_CU
 sudo unzip $PCKG_CU
 sudo chmod -R 777 commonutils
-rm $PCKG_CU
 # Prolog
 PCKG_PL=prolog_$PL_version.zip
 wget https://bitbucket.org/BalazsToth/prolog/downloads/$PCKG_PL
 sudo unzip $PCKG_PL
 sudo chmod -R 777 prolog
-rm $PCKG_PL
 # HandyXML
 PCKG_HX=handyxml_$HX_version.zip
 wget https://bitbucket.org/BalazsToth/handyxml/downloads/handyxml_$HX_version.zip
 sudo unzip $PCKG_HX
 sudo chmod -R 777 handyxml
-rm $PCKG_HX
 # nauticle
 PCKG_NA=nauticle_$NAUTICLE_version.zip
 wget https://bitbucket.org/nauticleproject/nauticle/downloads/$PCKG_NA
 sudo unzip $PCKG_NA
 sudo chmod -R 777 nauticle
-rm $PCKG_NA
 
 # Install the dependencies and the nauticle executable (nauticle) itself
-cd commonutils
+cd $INSTALL_DIR/commonutils
 sudo cmake .
 sudo make install
-cd ..
  
-cd prolog
+cd $INSTALL_DIR/prolog
 sudo cmake .
 sudo make install
-cd ..
  
-cd handyxml
+cd $INSTALL_DIR/handyxml
 sudo cmake .
 sudo make install
-cd ..
 
 # Set directory name for executable
 BIN_DIR="${INSTALL_DIR}/nauticle/bin/$OS"
-cd nauticle
+cd $INSTALL_DIR/nauticle
 sudo cmake .
 sudo mkdir $BIN_DIR
 sudo make
@@ -102,3 +95,16 @@ sudo touch start.sh
 sudo chmod 777 start.sh
 printf "#!/bin/sh\nshift\nexecutable=$BIN_DIR/nauticle\n" >> start.sh
 printf "sudo \$executable \"\$@\"" >> start.sh
+
+# Purge temparay files
+read -p "Do you wish to delete temporary files?" yn
+case $yn in
+    [Yy]* ) cd $INSTALL_DIR
+			sudo rm -r $INSTALL_DIR/commonutils $INSTALL_DIR/prolog $INSTALL_DIR/handyxml
+			sudo rm $PCKG_CU $PCKG_PL $PCKG_HX $PCKG_NA
+			sudo rm $INSTALL_DIR/VTK-$VTK_version.zip; break;;
+    [Nn]* ) exit;;
+    * ) echo "Please answer yes or no.";;
+esac
+
+
