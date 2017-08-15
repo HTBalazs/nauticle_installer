@@ -69,6 +69,7 @@ sudo make install
 BIN_DIR="${INSTALL_DIR}/nauticle/bin/$OS"
 cd $INSTALL_DIR/nauticle
 sudo cmake .
+sudo cmake .
 sudo mkdir $BIN_DIR
 sudo make
 cd ..
