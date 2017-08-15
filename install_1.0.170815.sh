@@ -39,24 +39,18 @@ cd $INSTALL_DIR
 # Download and unzip the required packages
 # Common utils
 PCKG_CU=commonutils_$CU_VERSION.zip
-wget https://bitbucket.org/BalazsToth/commonutils/downloads/$PCKG_CU
-sudo unzip $PCKG_CU
-sudo chmod -R 777 commonutils
-# Prolog
 PCKG_PL=prolog_$PL_version.zip
-wget https://bitbucket.org/BalazsToth/prolog/downloads/$PCKG_PL
-sudo unzip $PCKG_PL
-sudo chmod -R 777 prolog
-# HandyXML
 PCKG_HX=handyxml_$HX_version.zip
-wget https://bitbucket.org/BalazsToth/handyxml/downloads/handyxml_$HX_version.zip
-sudo unzip $PCKG_HX
-sudo chmod -R 777 handyxml
-# nauticle
 PCKG_NA=nauticle_$NAUTICLE_version.zip
+wget https://bitbucket.org/BalazsToth/commonutils/downloads/$PCKG_CU
+wget https://bitbucket.org/BalazsToth/prolog/downloads/$PCKG_PL
+wget https://bitbucket.org/BalazsToth/handyxml/downloads/$PCKG_HX
 wget https://bitbucket.org/nauticleproject/nauticle/downloads/$PCKG_NA
+sudo unzip $PCKG_CU
+sudo unzip $PCKG_PL
+sudo unzip $PCKG_HX
 sudo unzip $PCKG_NA
-sudo chmod -R 777 nauticle
+sudo chmod -R 777 commonutils prolog handyxml nauticle
 
 # Install the dependencies and the nauticle executable (nauticle) itself
 cd $INSTALL_DIR/commonutils
@@ -97,14 +91,19 @@ printf "#!/bin/sh\nshift\nexecutable=$BIN_DIR/nauticle\n" >> start.sh
 printf "sudo \$executable \"\$@\"" >> start.sh
 
 # Purge temparay files
-read -p "Do you wish to delete temporary files?" yn
-case $yn in
-    [Yy]* ) cd $INSTALL_DIR
-			sudo rm -r $INSTALL_DIR/commonutils $INSTALL_DIR/prolog $INSTALL_DIR/handyxml
-			sudo rm $PCKG_CU $PCKG_PL $PCKG_HX $PCKG_NA
-			sudo rm $INSTALL_DIR/VTK-$VTK_version.zip; break;;
-    [Nn]* ) exit;;
-    * ) echo "Please answer yes or no.";;
-esac
-
+while true; do
+	read -p "Do you wish to delete temporary files?" yn
+		case $yn in
+		    [Yy]* ) cd $INSTALL_DIR
+					sudo rm -r commonutils prolog handyxml
+					sudo rm $PCKG_CU $PCKG_PL $PCKG_HX $PCKG_NA VTK-$VTK_version.zip
+					mv $BIN_DIR/nauticle $INSTALL_DIR/tmp
+					rm -rf nauticle
+					mkdir -p "$BIN_DIR"
+					mv $INSTALL_DIR/tmp $BIN_DIR/nauticle
+					break;;
+		    [Nn]* ) exit;;
+		    * ) echo "Please answer yes or no.";;
+		esac
+done
 
