@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # Versions of nauticle and its dependencies
-NAUTICLE_version="1.0.170720"
+NAUTICLE_version="1.0.170815"
 VTK_version="7.0.0"
-CU_VERSION="1.0.170720"
-PL_version="1.0.170720"
-HX_version="1.0.170720"
+CU_VERSION="1.0.170815"
+PL_version="1.0.170815"
+HX_version="1.0.170815"
 
 # Set current directory to install directory.
 INSTALL_DIR=$PWD
@@ -65,18 +65,15 @@ rm $PCKG_NA
 # Install the dependencies and the nauticle executable (nauticle) itself
 cd commonutils
 sudo cmake .
-sudo cmake .
 sudo make install
 cd ..
  
 cd prolog
 sudo cmake .
-sudo cmake .
 sudo make install
 cd ..
  
 cd handyxml
-sudo cmake .
 sudo cmake .
 sudo make install
 cd ..
@@ -84,7 +81,6 @@ cd ..
 # Set directory name for executable
 BIN_DIR="${INSTALL_DIR}/nauticle/bin/$OS"
 cd nauticle
-sudo cmake .
 sudo cmake .
 sudo mkdir $BIN_DIR
 sudo make
