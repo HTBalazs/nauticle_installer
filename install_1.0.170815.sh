@@ -24,6 +24,10 @@ elif [ $OS = "Linux" ]; then
 	sudo apt-get --yes --force-yes install build-essential
 	sudo apt-get --yes --force-yes install freeglut3-dev
 	sudo apt-get --yes --force-yes install cmake
+	sudo apt-get install gcc-4.8
+	sudo apt-get install g++-4.8
+	sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 1
+	sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 1
 fi
 
 # Install proper version of VTK library
