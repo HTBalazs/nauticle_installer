@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # Versions of nauticle and its dependencies
-NAUTICLE_version="1.0.170815"
+NAUTICLE_version="1.0.171019"
 VTK_version="7.0.0"
 CU_VERSION="1.0.170815"
 PL_version="1.0.170815"
-HX_version="1.0.170815"
+HX_version="1.0.170904"
 
 # Set current directory to install directory.
 INSTALL_DIR=$PWD
@@ -19,15 +19,15 @@ if [ "$(uname)" = "Darwin" ]; then
    	brew install cmake
     OS="Mac"
 elif [ $OS = "Linux" ]; then
-# if linux, install opengl and cmake
+	# if linux, install opengl and cmake
     sudo apt-get update
 	sudo apt-get --yes --force-yes install build-essential
 	sudo apt-get --yes --force-yes install freeglut3-dev
 	sudo apt-get --yes --force-yes install cmake
-	sudo apt-get install gcc-4.8
-	sudo apt-get install g++-4.8
-	sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 1
-	sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 1
+	# sudo apt-get install gcc-4.8
+	# sudo apt-get install g++-4.8
+	# sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 1
+	# sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 1
 fi
 
 # Install proper version of VTK library
@@ -111,4 +111,3 @@ while true; do
 		    * ) echo "Please answer yes or no.";;
 		esac
 done
-
