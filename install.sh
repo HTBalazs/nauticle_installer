@@ -1,10 +1,11 @@
 #!/bin/sh
 
 # Versions of nauticle and its dependencies
-NAUTICLE_version="1.0.171019"
+NAUTICLE_version="1.0.180207"
 VTK_version="7.0.0"
 CU_VERSION="1.0.170815"
 PL_version="1.0.170815"
+YAMLCPP_version="0.5.3"
 
 # Set current directory to install directory.
 INSTALL_DIR=$PWD
@@ -16,6 +17,7 @@ if [ "$(uname)" = "Darwin" ]; then
 # if mac, install wget, and cmake
     brew install wget
    	brew install cmake
+   	brew install boost
     OS="Mac"
 elif [ $OS = "Linux" ]; then
 	# if linux, install opengl and cmake
@@ -23,6 +25,7 @@ elif [ $OS = "Linux" ]; then
 	sudo apt-get --yes --force-yes install build-essential
 	sudo apt-get --yes --force-yes install freeglut3-dev
 	sudo apt-get --yes --force-yes install cmake
+	sudo apt-get --yes --force-yes install libboost-all-dev
 fi
 
 # Install proper version of VTK library
@@ -39,15 +42,16 @@ cd $INSTALL_DIR
 PCKG_CU=commonutils_$CU_VERSION.zip
 PCKG_PL=prolog_$PL_version.zip
 PCKG_NA=nauticle_$NAUTICLE_version.zip
+PCKG_YM=release-$YAMLCPP_version.zip
 wget https://bitbucket.org/BalazsToth/commonutils/downloads/$PCKG_CU
 wget https://bitbucket.org/BalazsToth/prolog/downloads/$PCKG_PL
 wget https://bitbucket.org/nauticleproject/nauticle/downloads/$PCKG_NA
-wget https://github.com/jbeder/yaml-cpp/archive/release-0.5.3.zip
+wget https://github.com/jbeder/yaml-cpp/archive/$PCKG_YM
 sudo unzip $PCKG_CU
 sudo unzip $PCKG_PL
 sudo unzip $PCKG_NA
-sudo unzip release-0.5.3.zip
-sudo chmod -R 777 commonutils prolog nauticle yaml-cpp-release-0.5.3
+sudo unzip $PCKG_YM
+sudo chmod -R 777 commonutils prolog nauticle yaml-cpp-release-$YAMLCPP_version
 
 # Install the dependencies and the nauticle executable (nauticle) itself
 cd $INSTALL_DIR/commonutils
@@ -58,7 +62,7 @@ cd $INSTALL_DIR/prolog
 sudo cmake .
 sudo make install
 
-cd $INSTALL_DIR/yaml-cpp-release-0.5.3
+cd $INSTALL_DIR/yaml-cpp-release-$YAMLCPP_version
 sudo cmake .
 sudo make
 sudo make install
@@ -94,7 +98,7 @@ while true; do
 	read -p "Do you wish to delete temporary files?" yn
 		case $yn in
 		    [Yy]* ) cd $INSTALL_DIR
-					sudo rm -r commonutils prolog yaml-cpp-release-0.5.3
+					sudo rm -r commonutils prolog yaml-cpp-release-$YAMLCPP_version
 					sudo rm $PCKG_CU $PCKG_PL $PCKG_HX $PCKG_NA VTK-$VTK_version.zip
 					mv $BIN_DIR/nauticle $INSTALL_DIR/tmp
 					rm -rf nauticle
