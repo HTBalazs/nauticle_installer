@@ -14,12 +14,14 @@ sudo chmod -R 777 ${INSTALL_DIR}
 
 # Set OS variable (assume linux)
 OS="Linux"
+NUM_THREADS=4
 if [ "$(uname)" = "Darwin" ]; then
 # if mac, install wget, and cmake
     brew install wget
    	brew install cmake
    	brew install boost
     OS="Mac"
+    NUM_THREADS=$(sysctl -n hw.ncpu)
 elif [ $OS = "Linux" ]; then
 	# if linux, install opengl and cmake
     sudo apt-get update
@@ -27,6 +29,7 @@ elif [ $OS = "Linux" ]; then
 	sudo apt-get --yes --force-yes install freeglut3-dev
 	sudo apt-get --yes --force-yes install cmake
 	sudo apt-get --yes --force-yes install libboost-all-dev
+	NUM_THREADS=${nproc}
 fi
 
 # Install proper version of VTK library
@@ -59,15 +62,15 @@ sudo chmod -R 777 commonutils prolog c2c nauticle yaml-cpp-release-$YAMLCPP_vers
 # Install the dependencies and the nauticle executable (nauticle) itself
 cd $INSTALL_DIR/commonutils
 sudo cmake .
-sudo make install -j$(nproc)
+sudo make install -j${NUM_THREADS}
  
 cd $INSTALL_DIR/prolog
 sudo cmake .
-sudo make install -j$(nproc)
+sudo make install -j${NUM_THREADS}
 
 cd $INSTALL_DIR/yaml-cpp-release-$YAMLCPP_version
 sudo cmake .
-sudo make -j$(nproc)
+sudo make -j${NUM_THREADS}
 sudo make install
 
 # Set directory name for executable
@@ -76,7 +79,7 @@ cd $INSTALL_DIR/nauticle
 sudo cmake .
 sudo cmake .
 sudo mkdir $BIN_DIR
-sudo make install -j$(nproc)
+sudo make install -j${NUM_THREADS}
 cd ..
 
 # Add BIN_DIR to the environment PATH variable
