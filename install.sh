@@ -37,7 +37,7 @@ wget http://www.vtk.org/files/release/7.0/VTK-$VTK_version.zip
 sudo unzip VTK-$VTK_version.zip -d /usr/local/
 cd /usr/local/VTK-$VTK_version
 sudo cmake .
-sudo make
+sudo make -j${NUM_THREADS}
 
 # Go to install directory
 cd $INSTALL_DIR
