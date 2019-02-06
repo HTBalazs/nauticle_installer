@@ -1,10 +1,11 @@
 #!/bin/sh
 
 # Versions of nauticle and its dependencies
-NAUTICLE_version="1.0.180207"
+NAUTICLE_version="1.1.190131"
 VTK_version="7.0.0"
-CU_VERSION="1.0.170815"
-PL_version="1.0.170815"
+CU_VERSION="1.0.190131"
+PL_version="1.0.190131"
+C2_version="1.0.190131"
 YAMLCPP_version="0.5.3"
 
 # Set current directory to install directory.
@@ -41,17 +42,19 @@ cd $INSTALL_DIR
 # Download and unzip the required packages
 PCKG_CU=commonutils_$CU_VERSION.zip
 PCKG_PL=prolog_$PL_version.zip
+PCKG_C2=c2c_$C2_version.zip
 PCKG_NA=nauticle_$NAUTICLE_version.zip
 PCKG_YM=release-$YAMLCPP_version.zip
 wget https://bitbucket.org/BalazsToth/commonutils/downloads/$PCKG_CU
 wget https://bitbucket.org/BalazsToth/prolog/downloads/$PCKG_PL
+wget https://bitbucket.org/nauticleproject/c2c/downloads/$PCKG_C2
 wget https://bitbucket.org/nauticleproject/nauticle/downloads/$PCKG_NA
 wget https://github.com/jbeder/yaml-cpp/archive/$PCKG_YM
 sudo unzip $PCKG_CU
 sudo unzip $PCKG_PL
 sudo unzip $PCKG_NA
 sudo unzip $PCKG_YM
-sudo chmod -R 777 commonutils prolog nauticle yaml-cpp-release-$YAMLCPP_version
+sudo chmod -R 777 commonutils prolog c2c nauticle yaml-cpp-release-$YAMLCPP_version
 
 # Install the dependencies and the nauticle executable (nauticle) itself
 cd $INSTALL_DIR/commonutils
@@ -73,7 +76,7 @@ cd $INSTALL_DIR/nauticle
 sudo cmake .
 sudo cmake .
 sudo mkdir $BIN_DIR
-sudo make
+sudo make install
 cd ..
 
 # Add BIN_DIR to the environment PATH variable
@@ -98,8 +101,8 @@ while true; do
 	read -p "Do you wish to delete temporary files?" yn
 		case $yn in
 		    [Yy]* ) cd $INSTALL_DIR
-					sudo rm -r commonutils prolog yaml-cpp-release-$YAMLCPP_version
-					sudo rm $PCKG_CU $PCKG_PL $PCKG_HX $PCKG_NA VTK-$VTK_version.zip
+					sudo rm -r commonutils prolog c2c yaml-cpp-release-$YAMLCPP_version
+					sudo rm $PCKG_CU $PCKG_PL $PCKG_HX $PCKG_NA $PCKG_C2 VTK-$VTK_version.zip
 					mv $BIN_DIR/nauticle $INSTALL_DIR/tmp
 					rm -rf nauticle
 					mkdir -p "$BIN_DIR"
