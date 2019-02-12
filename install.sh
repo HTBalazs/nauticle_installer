@@ -39,10 +39,10 @@ echo Setting number of threads for compilation to $NUM_THREADS
 
 # Install proper version of VTK library
 wget http://www.vtk.org/files/release/7.0/VTK-$VTK_version.zip
-sudo unzip VTK-$VTK_version.zip -d /usr/local/
-cd /usr/local/VTK-$VTK_version
-sudo cmake .
-sudo make -j${NUM_THREADS}
+unzip VTK-$VTK_version.zip -d ~/local/
+cd ~/local/VTK-$VTK_version
+cmake .
+make -j${NUM_THREADS}
 
 # Go to install directory
 cd $INSTALL_DIR
@@ -69,12 +69,12 @@ unzip $PCKG_C2
 cd $INSTALL_DIR/commonutils
 cmake .
 cmake .
-sudo make install -j${NUM_THREADS}
+make install -j${NUM_THREADS}
  
 cd $INSTALL_DIR/prolog
 cmake .
 cmake .
-sudo make install -j${NUM_THREADS}
+make install -j${NUM_THREADS}
 
 cd $INSTALL_DIR/yaml-cpp-yaml-cpp-$YAMLCPP_version
 cmake .
@@ -85,7 +85,7 @@ sudo make install
 cd $INSTALL_DIR/c2c
 cmake .
 cmake .
-sudo make install -j${NUM_THREADS}
+make install -j${NUM_THREADS}
 
 # Set directory name for executable
 BIN_DIR="${INSTALL_DIR}/nauticle/bin/$OS"
@@ -93,7 +93,7 @@ cd $INSTALL_DIR/nauticle
 cmake .
 cmake .
 mkdir $BIN_DIR
-sudo make install -j${NUM_THREADS}
+make install -j${NUM_THREADS}
 cd ..
 
 # Add BIN_DIR to the environment PATH variable
